@@ -2,7 +2,7 @@ from colorama import init, Fore
 import os
 
 if os.name is "nt":
-    init()  # if windows call init() from colorame, to filter ANSI escape sequences out , and replace them with
+    init()  # if windows call init() from colorama, to filter ANSI escape sequences out and replace them with
             # equivalent Win32 calls
 
 print(Fore.GREEN + "##################" + Fore.RESET)
