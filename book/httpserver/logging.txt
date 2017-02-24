@@ -1,0 +1,10 @@
+__init__: Verfallsdatum:1473177495.5474155
+id_ok: Name: Michael, Passwort:Michael
+id_ok: redaktion/redaktion.db
+id_ok: Mit Datenbank verbunden.
+publiziere: Titel: Michael
+publiziere: Text: Endlich was los im Ruhrgebiet!
+publiziere: Gespeichert: Michael
+aktualisiere_news: Veröffentlichter Text:<h3>Michael</h3>
+<h4>von Michael</h4>
+<p>Endlich was los im Ruhrgebiet!</p>

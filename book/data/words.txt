@@ -1,0 +1,14 @@
+(dp0
+S'Python'
+p1
+I1
+sS'Programm'
+p2
+I1
+sS'Objekt'
+p3
+I1
+sS'Neu'
+p4
+I2
+s.

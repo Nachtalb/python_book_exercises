@@ -1,0 +1,2 @@
+id_ok: Name: None, Passwort:None
+id_ok: redaktion/redaktion.db
