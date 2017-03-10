@@ -1,5 +1,5 @@
-key Schlüssel Taste 
-slice Scheibe Schnitte Stück
+key SchlÃ¼ssel Taste 
+slice Scheibe Schnitte StÃ¼ck
 value Wert
 object Objekt
 update Aktualisierung
