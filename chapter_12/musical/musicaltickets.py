@@ -60,17 +60,32 @@ class Kartenverkauf:
             tel = input('Telefonnummer: ')
             zuschauer = Zuschauer(name, tel)
             reihe = 'x'                                 #3
+            allePlaetze = []
             while reihe != '':
                 reihe = input('Reihe: ')
                 if reihe != '':                           #4
                     platz = input('Platz: ')
+                    allePlaetze.append((int(reihe) - 1, int(platz) - 1))
                     print(vorstellung.saalbelegung.buche(
                       int(reihe)-1, int(platz) - 1, zuschauer))
+            if allePlaetze:
+                self.__drucken(vorstellung, zuschauer, allePlaetze)
 
     def __speichern(self):
         f = open(self.__datei, 'wb')
         pickle.dump(self.__musical, f)
         f.close()
 
+    def __drucken(self, vorstellung, zuschauer, plaetze):
+        print()
+        print("------------")
+        print("|  TICKET  |")
+        print("------------")
+        print("Musical: " + self.__musical.titel, "Vorstellung am: " + vorstellung.datum +
+              " um " + vorstellung.beginn, "Zugunsten von: " + zuschauer.name, "Telefonummer: " + zuschauer.tel,
+              sep="\n")
+        print("Plätze: ")
+        for p in plaetze:
+            print("Reihe: " + str(p[0]) + "\tPlatz: " + str(p[1]))
 
 kasse1 = Kartenverkauf('daten/hairspray.txt')
