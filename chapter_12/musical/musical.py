@@ -43,6 +43,16 @@ class Vorstellung:
         self.saalbelegung = Saalbelegung(saal)
         self.saal = saal
 
+    def getZuschauer(self):
+        """Liefert eine liste aller Zuschauer"""
+        zuschauerliste = []
+        for reihe in self.saalbelegung.belegung:
+            for platz in reihe:
+                if platz.belegt():
+                    zuschauerliste += [platz.zuschauer]
+        return zuschauerliste
+
+
     def __str__(self):                               #1
         beschreibung = self.datum + '\n' + \
         str(self.saalbelegung.getFreiePlaetze()) + \
