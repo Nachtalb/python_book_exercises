@@ -18,6 +18,20 @@ class Musical:
        self.saal = saal
        self.vorstellungen = [] # Liste von Vorstellungen
 
+    def storniere(self, datum):
+        """Storniere eine Vorstellung"""
+        vorstellung = self.getVorstellung(datum)
+        if not vorstellung:
+            return "Keine Vorstellung gefunden"
+        else:
+            text = "Die Vorstellung am " + vorstellung.datum + " um " + vorstellung.beginn + " wird ausfallen." \
+                " Sie können die Zuschauer mit den Folgenden Daten kontaktieren:"
+            for zuschauer in vorstellung.getZuschauer():
+                text += "\n* Name: " + zuschauer.name + "\t\tTelefonNr.: " + zuschauer.tel
+            self.vorstellungen.remove(vorstellung)
+            return text
+        pass
+
     def getVorstellung(self, datum):
         """Rückgabe eines Vorstellungs-Objektes mit
         passendem Datum, falls vorhanden, sonst None"""        
