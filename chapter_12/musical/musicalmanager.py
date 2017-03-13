@@ -17,6 +17,7 @@ class Manager:
     ------------------
     (n)eue Vorstellung
     (U)eberblick Vorstellungen
+    (S)toriniere Vorstellung
     (E)nde
      """
 
@@ -33,6 +34,8 @@ class Manager:
           wahl = input('Auswahl: ')
           if wahl in ['n', 'N']:
             self.__neueVorstellung()
+          if wahl in ['s', 'S']:
+            self.__storniere()
           elif wahl in ['U', 'u']: 
             print (str(self.__musical))
             print (self.__menuetext)
@@ -46,6 +49,10 @@ class Manager:
         beginn = input('Beginn der Vorstellung: ')
         vorstellung = Vorstellung(datum, beginn, self.__musical.saal)
         self.__musical.neueVorstellung(vorstellung)
+
+    def __storniere(self):
+        datum = input("Datum: ")
+        print(self.__musical.storniere(datum))
 
     def __neuesMusical(self):                        #3
         '''Dialog zur Definition eines neuen Musicals'''
