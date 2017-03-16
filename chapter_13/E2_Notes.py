@@ -44,7 +44,7 @@ class Pinnwall(object):
     : """
 
     __noteList = {}
-ﬁ
+
     def __init__(self):
         print(" Welcome to your pinnwall ".center(40, "-"))
         self.readFromFile()
@@ -64,8 +64,13 @@ class Pinnwall(object):
         name = ""
         while name == "":
             name = input("Set a unique name for the note: ")
+            if name == "":
+                break
             if name in list(self.__noteList.keys()):
                 name = ""
+        if name == "":
+            print("Adding new Note cancelled")
+            return
         text = input("Content: ")
         self.__noteList[name] = (Note(name, text))
 
