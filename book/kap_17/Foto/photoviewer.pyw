@@ -19,7 +19,7 @@ class FotoViewer(object):
         
   def __createWidgets(self):
     self.fenster = Tk()
-    self.bild = BitmapImage(file=DEFAULT_PATH)
+    self.bild = PhotoImage(file=DEFAULT_PATH)
     self.bildflaeche = Label(master=self.fenster,
                         image=self.bild)
     
