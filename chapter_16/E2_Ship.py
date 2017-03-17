@@ -3,16 +3,17 @@ from random import *
 
 
 class Cell:
-    def __init__(self, game, x, y):
+    def __init__(self, _game, x, y):
         self.x = x
         self.y = y
-        self.game = game
+        self.game = _game
         self.button = Label(self.game.window, text="   ", relie="groove", width=2)
         self.button.bind("<Button-1>", self.press)
         self.button.grid(column=x, row=y)
 
+    # noinspection PyUnusedLocal
     def press(self, *args):
-        check = self.game.playfield.checkHit
+        check = self.game.playfield.check_hit
         if check(self.x, self.y):
             self.button.config(bg="blue")
         else:
@@ -35,9 +36,10 @@ class Playfield:
             for j in range(self.playfield_size):
                 self.d[(i, j)] = 0
         for ship in self.ships:
-            for k in range(ship[0]): self.setBoatPos(ship[1])
+            for k in range(ship[0]):
+                self.set_boat_pos(ship[1])
 
-    def setBoatPos(self, length):
+    def set_boat_pos(self, length):
         _max = self.playfield_size - 1 - length
         ok = 0
 
@@ -65,7 +67,7 @@ class Playfield:
                     ok = 0
         return ok
 
-    def checkHit(self, x, y):
+    def check_hit(self, x, y):
         return self.d[x, y]
 
 
@@ -75,6 +77,7 @@ class Game:
         self.playfield = Playfield()
         for x in range(self.playfield.playfield_size):
             for y in range(self.playfield.playfield_size):
+                # noinspection PyUnusedLocal
                 button = Cell(self, x, y)
         self.window.mainloop()
 
