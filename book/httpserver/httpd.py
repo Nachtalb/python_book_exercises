@@ -1,4 +1,4 @@
-#! /python35/python.exe
+#! /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 #----------------------------------------------------
 # Dateiname:  httpd.py 
 # HTTP-Server, der CGI-Skripte verarbeiten kann.
