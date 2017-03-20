@@ -19,17 +19,3 @@ server=HTTPServer(serveradresse,
                   CGIHTTPRequestHandler)              #2
 server.serve_forever()                                #3
 print("Serving on port ", PORT)
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
