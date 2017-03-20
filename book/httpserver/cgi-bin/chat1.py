@@ -1,4 +1,4 @@
-#! /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
+#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
 #----------------------------------------------------
 # Dateiname:  chat1.py 
