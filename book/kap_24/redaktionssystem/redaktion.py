@@ -38,7 +38,7 @@ SEITE1 = """Content-type=text/html
 </head>
 <body bgcolor=#C0C0C0>
 <h2>Python-Redaktionssystem</h2>
-<form action="http://localhost:8080/cgi-bin/redaktion.py"
+<form action="http://localhost:8000/cgi-bin/redaktion.py"
 method="POST" >
 <input type="hidden" name="name" value="{}">     
 <input type="hidden" name="passwort" value="{}">      <b>Titel: </b><input type="Text" name="titel"
@@ -73,7 +73,7 @@ SEITE2 = """Content-type=text/html
 </head>
 <body bgcolor=#C0C0C0>
 <h2> Python-Redaktionssystem</h2>
-<form action="http://localhost:8080/cgi-bin/redaktion.py" 
+<form action="http://localhost:8000/cgi-bin/redaktion.py" 
 method="POST">
 Name: <input type="Text" name="name" >&nbsp;
 Passwort: <input type="Password"

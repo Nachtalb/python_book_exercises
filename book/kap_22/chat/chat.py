@@ -15,7 +15,7 @@ HTTP_SCHABLONE = '''Content-Type: text/html
   <body>
     <h1>Python-Chat</h1>
      {} <hr>
-     <form action="http://localhost:8080/cgi-bin/chat.py" 
+     <form action="http://localhost:8000/cgi-bin/chat.py" 
      method="POST">
        <input type="hidden" name="name" value="{}">
        Ich sage:&nbsp;

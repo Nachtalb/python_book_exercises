@@ -19,7 +19,7 @@ http_SCHABLONE = '''Content-Type: text/html
 <head><title>Python-Chat</title></head>
 <body><h1>Python-Chat</h1>
 {} <hr>
-<form action="http://localhost:8080/cgi-bin/chat1.py" method="POST">
+<form action="http://localhost:8000/cgi-bin/chat1.py" method="POST">
 <input type="hidden" name="name" value="{}">
 Ich sage:&nbsp;
 <input type="Text" name="beitrag" size="40" maxlength="40">

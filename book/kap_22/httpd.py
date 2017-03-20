@@ -12,7 +12,7 @@
 
 
 from http.server import HTTPServer, CGIHTTPRequestHandler
-serveradresse =("", 8080)                             #1
+serveradresse =("", 8000)                             #1
 server=HTTPServer(serveradresse,
                   CGIHTTPRequestHandler)              #2
 server.serve_forever()                                #3
