@@ -1,4 +1,4 @@
-#! c:/Python35/python.exe                               #1
+#! c:/Library/Frameworks/Python.framework/Versions/3.6/bin/python3                               #1
 
 #----------------------------------------------------
 # Dateiname:  login.py 

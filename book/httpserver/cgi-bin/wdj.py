@@ -1,4 +1,4 @@
-#!/Python35/python.exe
+#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 #----------------------------------------------------
 # Dateiname:  wdj.py 
 # Modul mit Klasse Responder zur Wahl des "Wortes des Jahres"

@@ -1,4 +1,4 @@
-#!/Python35/python.exe                               
+#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3
 
 #----------------------------------------------------
 # Dateiname:  shop.py 
