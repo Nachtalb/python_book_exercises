@@ -21,6 +21,12 @@ HTTP_SCHABLONE = '''Content-Type: text/html
        Ich sage:&nbsp;
        <input type="Text" name="beitrag" size="40"
        maxlength="40">
+       <label for="normal">Normal</label>
+       <input type="radio" name="schriftart" value="normal" id="normal" checked>
+       <label for="schreiend">Schreiend</label>
+       <input type="radio" name="schriftart" value="schreiend" id="schreiend">
+       <label for="fluesternd">Flüsternd</label>
+       <input type="radio" name="schriftart" value="fluesternd" id="fluesternd">
        <input type="Submit"  value="OK">
      </form>
   </body>
