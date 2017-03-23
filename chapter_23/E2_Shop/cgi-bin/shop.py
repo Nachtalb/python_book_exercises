@@ -55,23 +55,22 @@ class Shop:
 
 
 class MailSender:
-    template = """From: {email}
-    To: {receiver}
-    Subject: Order Confirmation
-    MIME-Version: 1.0
-    Content-Type: text/html
-    Content-Transfer-Encoding: quoted-printable
+    template = """From: Nick's Online Shop <{email}>
+To: Customer <{receiver}>
+MIME-Version: 1.0
+Content-type: text/html
+Subject: Order Confirmation
+From: {email}
     
-    {message}
-    """
+<html><body><h3>Order Confirmation</h3>
+{message}</body></html>"""
 
-    template_message = """Hello there
+    template_message = """<p>Hello there<br><br>
     
-    Thank you very much for your order at our online-shop. The product will be sent as fast as possible.
+    Thank you very much for your order at our online-shop. The product will be sent as fast as possible.<br><br>
     
-    We wish you a nice day!
-    Bye
-    """
+    We wish you a nice day!<br>
+    Bye</p>"""
 
     smtp_server = "smtp.gmail.com"
     smtp_ssl = True
