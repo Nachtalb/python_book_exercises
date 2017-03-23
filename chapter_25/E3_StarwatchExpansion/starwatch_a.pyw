@@ -2,12 +2,11 @@
 # Dateiname:  starwatch_a.pyw
 # Sterne zählen - verbesserte Version
 # importiert das Modul stars_a
-# 
+#
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 25
 # Michael Weigend 24. 8. 2016
 # ----------------------------------------------------
-
 from tkinter import *
 from tkinter import filedialog
 
@@ -18,19 +17,24 @@ DEFAULT_PATH = "bilder/wagen.gif"
 
 class Starwatch(object):
     def __init__(self):
+        self.r = 5  # Radius des Markierungskreises
+        self.markID = None  # ID Markierung auf dem Canvas
         self.__createWidgets()
-        self.sky = Sky(self.image)  # 2
         self.__layout()
+        self.sky = Sky(self.image)
         self.window.mainloop()
 
     def __createWidgets(self):
         self.window = Tk()
         self.window.title("Sterne z\xe4hlen")
+
         self.image = PhotoImage(file=DEFAULT_PATH)
         self.canvas = Canvas(master=self.window,
                              width="9c", height="5c")
         self.imageID = self.canvas.create_image(0, 0,
                                                 image=self.image, anchor=NW)
+        self.canvas.bind(sequence="<Button-1>",
+                         func=self.markStar)
         self.buttonLoad = Button(master=self.window,
                                  text="Laden",
                                  command=self.load)
@@ -39,6 +43,8 @@ class Starwatch(object):
                                   command=self.count)
         self.labelCount = Label(master=self.window, width=4,
                                 fg="blue")
+        self.labelBrightness = Label(master=self.window,
+                                     width=5, fg="blue")
 
     def __layout(self):
         self.canvas.pack()
@@ -47,19 +53,36 @@ class Starwatch(object):
         Label(master=self.window,
               text="Gez\xe4hlte Sterne:").pack(side=LEFT)
         self.labelCount.pack(side=LEFT)
+        Label(master=self.window,
+              text="Helligkeit:").pack(side=LEFT)
+        self.labelBrightness.pack(side=LEFT)
 
     def load(self):
-        path = filedialog.askopenfilename()  # 3
+        path = filedialog.askopenfilename()
         if path:
-            self.image = PhotoImage(file=path)  # 4
+            self.image = PhotoImage(file=path)
             self.canvas.itemconfigure(self.imageID,
                                       image=self.image)
             self.sky = Sky(self.image)
-            self.window.mainloop()  # 5
+            self.window.mainloop()
 
     def count(self):
-        number = str(self.sky.count())  # 6
-        self.labelCount.config(text=number)  # 7
+        number = str(self.sky.count())
+        self.labelCount.config(text=number)
+
+    def markStar(self, event):
+        position = (event.x, event.y)
+        x0, y0 = event.x - self.r, event.y - self.r
+        x1, y1 = event.x + self.r, event.y + self.r
+        self.canvas.delete(self.markID)
+        self.markID = self.canvas.create_oval(x0, y0, x1, y1,
+                                              outline="yellow")
+        star = self.sky.getStar(position)
+        if star:
+            brightness = str(star.getBrightness())
+            self.labelBrightness.config(text=brightness)
+        else:
+            self.labelBrightness.config(text="---")
 
 
 sw = Starwatch()
