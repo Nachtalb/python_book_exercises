@@ -1,20 +1,22 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  videoplayer_aufgabe_1.pyw
 # Videoplayer mit zusätzlichen Funktionen
 #
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 
-from PyQt5.QtWidgets import *
+import sys
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QPixmap  # 1
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap                 #1
-import sys
+from PyQt5.QtWidgets import *
+
 
 class Video(QVideoWidget):
     def __init__(self, master):
@@ -22,6 +24,7 @@ class Video(QVideoWidget):
 
     def keyPressEvent(self, event):
         self.setFullScreen(False)
+
 
 class Window(QWidget):
     def __init__(self):
@@ -33,7 +36,7 @@ class Window(QWidget):
     def createWidgets(self):
         self.setWindowTitle("Videoplayer")
         self.videoWidget = Video(self)
-        self.videoWidget.setMinimumSize(320,180)
+        self.videoWidget.setMinimumSize(320, 180)
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.videoWidget)
         self.player.setVolume(0)
@@ -44,24 +47,22 @@ class Window(QWidget):
         self.selectButton.clicked.connect(self.selectFile)
         self.fullButton = QPushButton("Vollbild")
         self.fullButton.clicked.connect(self.fullScreen)
-        
+
         self.volumeSlider = QSlider(Qt.Horizontal)
         self.volumeSlider.sliderMoved.connect(self.player.setVolume)
         self.volumeSlider.setRange(0, 100)
         self.contrastSlider = QSlider(Qt.Horizontal)
         self.contrastSlider.sliderMoved.connect(
-                    self.videoWidget.setContrast)
+            self.videoWidget.setContrast)
         self.contrastSlider.setRange(-100, 100)
-        self.volumeLabel =  QLabel()                        #2
+        self.volumeLabel = QLabel()  # 2
         self.volumeLabel.setPixmap(QPixmap("volume.png"))
-        self.contrastLabel =  QLabel()                        #3
+        self.contrastLabel = QLabel()  # 3
         self.contrastLabel.setPixmap(QPixmap("contrast.png"))
         self.messageLabel = QLabel(self)
         self.messageLabel.move(30, 30)
         self.messageLabel.hide()
-    
-        
-     
+
     def createLayout(self):
         vBox = QVBoxLayout()
         vBox.addWidget(self.videoWidget)
@@ -78,23 +79,23 @@ class Window(QWidget):
         vBox.addLayout(hBox2)
         self.setLayout(vBox)
 
-    def play (self):
+    def play(self):
         if self.playButton.text() == "Start":
             self.playButton.setText("Pause")
             self.messageLabel.hide()
-            self.player.play()         
+            self.player.play()
         else:
             self.playButton.setText("Start")
             self.messageLabel.setText(
-                    "Position: %i Sekunden" \
-                    % round(self.player.position()/1000))
+                "Position: %i Sekunden" \
+                % round(self.player.position() / 1000))
             self.messageLabel.adjustSize()
             self.messageLabel.show()
             self.player.pause()
-           
+
     def selectFile(self):
         fileName, _ = QFileDialog.getOpenFileName(self,
-                                         "Video öffnen")
+                                                  "Video öffnen")
         self.media = QMediaContent(QUrl(fileName))
         self.player.setMedia(self.media)
         self.playButton.setEnabled(True)
@@ -106,5 +107,3 @@ class Window(QWidget):
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-
-

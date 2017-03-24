@@ -1,6 +1,3 @@
-from turtle import *
-
-
 def drachen(länge, stufe):
     if stufe == 0:
         fd(länge)
@@ -8,18 +5,19 @@ def drachen(länge, stufe):
         return
     else:
         left(45)
-        drachen(länge/1.4142, stufe-1)
+        drachen(länge / 1.4142, stufe - 1)
         right(45)
         up()
         fd(länge)
         down()
         left(135)
-        drachen(länge/1.41, stufe-1)
+        drachen(länge / 1.41, stufe - 1)
         up()
-        right(135) 
-        back(länge) 
+        right(135)
+        back(länge)
         down()
         return
+
 
 speed(0)
 hideturtle()

@@ -1,18 +1,20 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  ansichtskarte.pyw
 # Erstellen einer Ansichtskarte (Foto plus Text).
 #
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
- 
-from PyQt5.QtWidgets import *
+# ----------------------------------------------------
+
+import sys
+
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap , QPainter, QColor, QFont                #1
-import sys 
+from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont  # 1
+from PyQt5.QtWidgets import *
+
 
 class Window(QWidget):
     def __init__(self):
@@ -22,18 +24,18 @@ class Window(QWidget):
         self.text = ""
         self.createWidgets()
         self.createLayout()
-        self.filename=""
+        self.filename = ""
         self.show()
 
     def createWidgets(self):
         self.setWindowTitle("Ansichtskarte")
-        self.label = QLabel()                                
-        self.label.setMinimumSize(320,180)
+        self.label = QLabel()
+        self.label.setMinimumSize(320, 180)
         self.loadButton = QPushButton("Bild laden")
         self.loadButton.clicked.connect(self.load)
         self.textButton = QPushButton("Text eingeben")
         self.textButton.clicked.connect(self.setText)
-             
+
     def createLayout(self):
         vBox = QVBoxLayout()
         vBox.addWidget(self.label)
@@ -43,14 +45,14 @@ class Window(QWidget):
         vBox.addLayout(hBox)
         self.setLayout(vBox)
 
-    def load (self):
+    def load(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Bild laden", "*.png")
         if filename:
             self.filename = filename
 
     def paintEvent(self, event):
         if self.filename:
-            self.pixmap = QPixmap(self.filename) 
+            self.pixmap = QPixmap(self.filename)
             painter = QPainter()
             painter.begin(self.pixmap)
             painter.setPen(self.color)
@@ -63,46 +65,12 @@ class Window(QWidget):
             self.adjustSize()
 
     def setText(self):
-        text, ok  = QInputDialog.getText(self, "Texteingabe",
-                             "Bitte geben Sie einen Grußtext ein")
+        text, ok = QInputDialog.getText(self, "Texteingabe",
+                                        "Bitte geben Sie einen Grußtext ein")
         if ok:
             self.text = text
-                                         
+
+
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

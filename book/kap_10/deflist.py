@@ -4,7 +4,7 @@
 # Objektorientierte Programmierung mit Python
 # Kap. 10
 # Michael Weigend 20.4.2006
-#----------------------------------------------------
+# ----------------------------------------------------
 class Defaultlist(list):
     def __init__(self, s=[], default=0):
         self.default = default
@@ -16,11 +16,6 @@ class Defaultlist(list):
         except IndexError:
             return self.default
 
-    def __add__ (self, other):
-        result = list.__add__ (self, other)
+    def __add__(self, other):
+        result = list.__add__(self, other)
         return Defaultlist(result, self.default)
-        
-
-
-
-

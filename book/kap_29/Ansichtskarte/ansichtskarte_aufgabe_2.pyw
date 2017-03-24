@@ -1,6 +1,6 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  ansichtskarte_aufgabe_2.pyw
 # Editor für eine Ansichtskarte mit Auswahl des Fonts
 # und der Schriftfarbe
@@ -8,11 +8,13 @@
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
-from PyQt5.QtWidgets import *
+# ----------------------------------------------------
+import sys
+
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap , QPainter, QColor, QFont                #1
-import sys 
+from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont  # 1
+from PyQt5.QtWidgets import *
+
 
 class Window(QWidget):
     def __init__(self):
@@ -27,8 +29,8 @@ class Window(QWidget):
 
     def createWidgets(self):
         self.setWindowTitle("Ansichtskarte")
-        self.label = QLabel()                                
-        self.label.setMinimumSize(320,180)
+        self.label = QLabel()
+        self.label.setMinimumSize(320, 180)
 
         self.loadButton = QPushButton("Bild laden")
         self.loadButton.clicked.connect(self.load)
@@ -40,8 +42,7 @@ class Window(QWidget):
         self.colorButton.clicked.connect(self.selectColor)
         self.fontButton = QPushButton("Schriftart")
         self.fontButton.clicked.connect(self.selectFont)
-        
-     
+
     def createLayout(self):
         vBox = QVBoxLayout()
         vBox.addWidget(self.label)
@@ -56,20 +57,19 @@ class Window(QWidget):
 
     def save(self):
         filename, _ = QFileDialog.getSaveFileName(parent=self,
-                                           caption ="Bild speichern",
-                                           filter = "*.png")
+                                                  caption="Bild speichern",
+                                                  filter="*.png")
         self.pixmap.save(filename)
-        
-    def load (self):
+
+    def load(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Bild laden", "*.png")
         if filename:
             self.filename = filename
-            #self.paint()
-
+            # self.paint()
 
     def paintEvent(self, event):
         if self.filename:
-            self.pixmap = QPixmap(self.filename) 
+            self.pixmap = QPixmap(self.filename)
             painter = QPainter()
             painter.begin(self.pixmap)
             painter.setPen(self.color)
@@ -81,62 +81,26 @@ class Window(QWidget):
             self.label.adjustSize()
             self.adjustSize()
 
-
     def setText(self):
-        text, ok  = QInputDialog.getText(self, "Texteingabe",
-                            "Bitte geben Sie einen Grußtext ein")
+        text, ok = QInputDialog.getText(self, "Texteingabe",
+                                        "Bitte geben Sie einen Grußtext ein")
         if ok:
             self.text = text
-            #self.paint()
+            # self.paint()
 
     def selectColor(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.color = color
-            #self.paint()
+            # self.paint()
 
     def selectFont(self):
         font, ok = QFontDialog.getFont()
         if ok:
             self.font = font
-            #self.paint()
+            # self.paint()
 
 
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

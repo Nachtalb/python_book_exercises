@@ -1,4 +1,4 @@
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  ranking.py 
 # Modul mit Klasse Ranking für Wahl des "Wortes des Jahres"
 # Demonstration der Funktion doctest.testmod()
@@ -6,7 +6,7 @@
 # Objektorientierte Programmierung mit Python 3
 # Kap. 25
 # Michael Weigend 29.1.2013
-#----------------------------------------------------
+# ----------------------------------------------------
 
 """
 Modul mit der Klasse Ranking
@@ -40,46 +40,48 @@ Einstein 2 <br> '
 True
 """
 
-import pickle 
-class Ranking:                                        #1
-  def __init__ (self, filename):
-    self.filename = filename
-    try:                                              #2
-        f = open(filename, "rb")
-        self.voting = pickle.load(f)
+import pickle
+
+
+class Ranking:  # 1
+    def __init__(self, filename):
+        self.filename = filename
+        try:  # 2
+            f = open(filename, "rb")
+            self.voting = pickle.load(f)
+            f.close()
+        except:
+            self.voting = {}
+
+    def add(self, word):  # 3
+        if word in self.voting.keys():
+            self.voting[word] += 1
+        else:
+            self.voting[word] = 1
+
+    def getTop(self, n):
+        items = [(self.voting[word], word)  # 4
+                 for word in self.voting.keys()]
+        items.sort(reverse=True)  # 5
+        top = items[:n]  # 6
+        response = ""  # 7
+        for (votes, word) in top:
+            response += "{} {} <br> ".format(word, votes)
+        return response
+
+    def getRank(self, word):  # 8
+        votes = self.voting[word]
+        vote_list = list(self.voting.values())  # 9
+        vote_list.sort(reverse=True)
+        return vote_list.index(votes) + 1  # 10
+
+    def save(self):
+        f = open(self.filename, "wb")
+        pickle.dump(self.voting, f)
         f.close()
-    except: self.voting = {}
 
-  def add (self, word):                               #3
-      if word in self.voting.keys():
-          self.voting[word] += 1
-      else: self.voting[word] = 1
 
-  def getTop(self, n):
-      items = [(self.voting[word], word)              #4
-               for word in self.voting.keys()]
-      items.sort(reverse = True)                      #5
-      top = items[:n]                                 #6
-      response = ""                                   #7
-      for (votes, word) in top:
-          response += "{} {} <br> ".format(word, votes)
-      return response
-
-  def getRank (self, word):                           #8
-      votes = self.voting[word]                       
-      vote_list = list(self.voting.values())          #9
-      vote_list.sort(reverse = True)
-      return vote_list.index(votes)+1                #10
-
-  def save (self):
-      f = open (self.filename, "wb")
-      pickle.dump(self.voting, f)
-      f.close()
-
-if __name__ == "__main__":                           #11
+if __name__ == "__main__":  # 11
     import doctest
+
     doctest.testmod()
-
-
-    
-

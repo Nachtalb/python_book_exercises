@@ -4,7 +4,7 @@
 # Objektorientierte Programmierung mit Python 3
 # Kap. 4 Lösung 6
 # Michael Weigend Januar 2013
-#----------------------------------------------------
+# ----------------------------------------------------
 
 # charts.py
 print("Bitte geben Sie die ersten Titel der Charts ein!")
@@ -22,4 +22,3 @@ print("Platz 2:", charts[1])
 print("Platz 3:", charts[2])
 print()  # leere Zeile
 input("Beenden mit <ENTER>")
-

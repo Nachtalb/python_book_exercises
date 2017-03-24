@@ -1,12 +1,14 @@
-<?xml version="1.0" ?><katalog titel="Alles für den Vogel">
-  <warengruppe name="Futter">
-    <ware id="2" preis="0.99">Kräcker 100 g</ware>
-    <ware id="3" preis="4.15">Fruchtschmaus 1 kg </ware>
-    <ware id="4" preis="9.25">Futtermischung aus Ökoanbau 500 g</ware>
-  <ware id="15" preis="2">Sesamstange
-</ware></warengruppe>
-  <warengruppe name="Pflege">
-    <ware id="15" preis="0.69">Sepiaschale</ware>
-    <ware id="11" preis="1.79">Mineral-Sitzstange</ware>
-  </warengruppe>
+<?xml version="1.0" ?>
+<katalog titel="Alles für den Vogel">
+    <warengruppe name="Futter">
+        <ware id="2" preis="0.99">Kräcker 100 g</ware>
+        <ware id="3" preis="4.15">Fruchtschmaus 1 kg</ware>
+        <ware id="4" preis="9.25">Futtermischung aus Ökoanbau 500 g</ware>
+        <ware id="15" preis="2">Sesamstange
+        </ware>
+    </warengruppe>
+    <warengruppe name="Pflege">
+        <ware id="15" preis="0.69">Sepiaschale</ware>
+        <ware id="11" preis="1.79">Mineral-Sitzstange</ware>
+    </warengruppe>
 </katalog>

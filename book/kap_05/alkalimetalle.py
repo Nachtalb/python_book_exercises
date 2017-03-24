@@ -4,7 +4,7 @@
 # Objektorientierte Programmierung mit Python 3
 # Kap. 5 Lösung 3
 # Michael Weigend 1. 10. 09
-#----------------------------------------------------
+# ----------------------------------------------------
 
 print("Bitte geben Sie das Symbol eines Elementes an.")
 element = input("Element: ")

@@ -1,22 +1,19 @@
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname: packer_est.pyw
 # Objektorientierte Programmierung mit Python
 # Kap. 16   
 # Michael Weigend 2.10.09
-#----------------------------------------------------
+# ----------------------------------------------------
 
 from tkinter import *
+
 fenster = Tk()
-labels=[]
+labels = []
 for i in range(4):
     labels.append(Label(master=fenster, text=str(i),
-                   bg='white', font=('Arial', 50)))
+                        bg='white', font=('Arial', 50)))
 labels[0].pack(side=TOP)
 labels[1].pack(side=RIGHT)
 labels[2].pack(side=RIGHT)
 labels[3].pack(side=LEFT)
 fenster.mainloop()
-
-
-
-

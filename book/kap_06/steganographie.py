@@ -4,12 +4,13 @@
 # Objektorientierte Programmierung mit Python 3
 # Kap. 6 Loesung 2
 # Michael Weigend Januar 2013
-#----------------------------------------------------
+# ----------------------------------------------------
 
 def zufallsbuchstabe():
-        buchstaben = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        import random
-        return buchstaben[random.randint(0, 25)]
+    buchstaben = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    import random
+    return buchstaben[random.randint(0, 25)]
+
 
 def verstecke(s, n=1):
     textGross = s.upper()
@@ -20,8 +21,9 @@ def verstecke(s, n=1):
             versteckt += zufallsbuchstabe()
     return versteckt
 
-print ('Um acht an der Uhr')
-print ()
-print (verstecke('Um acht an der Uhr'))
-print (verstecke ('Um acht an der Uhr',2))
-input ("Beenden mit <ENTER>")
+
+print('Um acht an der Uhr')
+print()
+print(verstecke('Um acht an der Uhr'))
+print(verstecke('Um acht an der Uhr', 2))
+input("Beenden mit <ENTER>")

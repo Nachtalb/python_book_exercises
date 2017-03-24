@@ -1,6 +1,6 @@
 #! /Python34/python.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  dmm.py
 # Das Modul stellt die Funktion get_digits bereit,
 # die die Ziffern des Displays des angeschlossenen
@@ -9,31 +9,31 @@
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 31.3
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 import serial
 
-DIGIT = {'1111110':'0',
-         '0110000':'1',
-         '1101101':'2',
-         '1111001':'3',
-         '0110011':'4',
-         '1011011':'5',
-         '1011111':'6',
-         '1110000':'7',
-         '1111111':'8',
-         '1111011':'9'}
+DIGIT = {'1111110': '0',
+         '0110000': '1',
+         '1101101': '2',
+         '1111001': '3',
+         '0110011': '4',
+         '1011011': '5',
+         '1011111': '6',
+         '1110000': '7',
+         '1111111': '8',
+         '1111011': '9'}
+
 
 def get_digits():
     """Liefert die Ziffern auf dem Display als Zahl"""
-    ser = serial.Serial(2, 2400, 8, 'N', 1, timeout=3) 
+    ser = serial.Serial(2, 2400, 8, 'N', 1, timeout=3)
     data = ser.read(28)
     ser.close()
     d1 = [format(i, '#010b')[2:] for i in data]
     i = 0
-    while not d1[i].startswith("0001"): i +=1
-    d = d1[i:i+14]
-       
-    
+    while not d1[i].startswith("0001"): i += 1
+    d = d1[i:i + 14]
+
     A = d[1][7] + d[2][7] + d[2][5] + d[2][4] + \
         d[1][5] + d[1][6] + d[2][6]
     B = d[3][7] + d[4][7] + d[4][5] + d[4][4] + \
@@ -43,7 +43,7 @@ def get_digits():
     D = d[7][7] + d[8][7] + d[8][5] + d[8][4] + \
         d[7][5] + d[7][6] + d[8][6]
     return int(DIGIT[A] + DIGIT[B] + DIGIT[C] + DIGIT[D])
-       
+
 
 if __name__ == '__main__':
     while True:
@@ -51,5 +51,4 @@ if __name__ == '__main__':
             n = get_digits()
             print(n)
         except:
-            print ("error")
-
+            print("error")

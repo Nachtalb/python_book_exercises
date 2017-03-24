@@ -1,19 +1,19 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  worldmap.pyw
 # Auf einer Weltkarte wird ein gesuchter Ort angezeigt
 #
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 
-from PyQt5.QtWidgets import *
+import sys
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap
-from urllib.request import urlopen
-import sys
+from PyQt5.QtWidgets import *
 from geopy.geocoders import Nominatim
 
 MAPFILE = "world_map.png"
@@ -39,55 +39,20 @@ class Window(QWidget):
         self.button.move(20, 200)
         self.target.hide()
 
-        
     def search(self):
-        town, ok  = QInputDialog.getText(self, "Suche Ort",
-                            "Bitte geben Sie eine Stadt ein")
+        town, ok = QInputDialog.getText(self, "Suche Ort",
+                                        "Bitte geben Sie eine Stadt ein")
         self.target.hide()
         if ok:
-            geolocator = Nominatim()      
+            geolocator = Nominatim()
             location = geolocator.geocode(town, timeout=10)
-            k = self.pixmap.width()/360
-            x = (location.longitude + 180)* k
+            k = self.pixmap.width() / 360
+            x = (location.longitude + 180) * k
             y = (-location.latitude + 90) * k
             self.target.move(x, y)
             self.target.show()
- 
+
+
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

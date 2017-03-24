@@ -1,6 +1,6 @@
 # Belegungen einer aussagenlogischen Formel
 
-print("a b c  (a or b) and c")    # Überschrift
+print("a b c  (a or b) and c")  # Überschrift
 print("---------------------")
 for a in [0, 1]:
     for b in [0, 1]:

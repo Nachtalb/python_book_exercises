@@ -1,6 +1,6 @@
 #! /python31/python.exe                                    #1
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  redaktion.py
 #
 # CGI-Skript, das Teil eines online-Redaktionssystems ist.
@@ -15,14 +15,20 @@
 # Objektorientierte Programmierung mit Python
 # Kap. 24
 # Michael Weigend 11.11.09
-#----------------------------------------------------
+# ----------------------------------------------------
 
-import sqlite3, cgi, hashlib, cgitb, time, logging
+import cgi
+import cgitb
+import hashlib
+import logging
+import sqlite3
+import time
+
 cgitb.enable()
 logging.basicConfig(filename="/tmp/logging.txt",
                     format="%(funcName)s: %(message)s",
                     level=logging.DEBUG,
-                    filemode="w")                          #2
+                    filemode="w")  # 2
 
 # Schablone fuer HTTP-Paket
 # Platzhalter {}: Name, Passwort, Text, Fehler im Beitrag,
@@ -103,92 +109,96 @@ BEITRAG = """<h3>{}</h3>
 HTML = {ord("ä"): "&auml;", ord("ö"): "&ouml;",
         ord("ü"): "&uuml;", ord("Ä"): "&Auml;",
         ord("Ö"): "&Ouml;", ord("Ü"): "&Uuml;",
-        ord("ß"): "&szlig;"}                         #2
-class Person(object):                                #3
-  def __init__(self, form, db):
-    self.name = form.getvalue("name")
-    self.pw = form.getvalue("passwort")
-    self.db = db
+        ord("ß"): "&szlig;"}  # 2
 
-  def id_ok(self):                                   #4
-    logging.debug("Name: {}, Passwort:{}".format(
-                                     self.name,self.pw))
-    try:
-        logging.debug(self.db)
-        verbindung = sqlite3.connect(self.db)
-        c = verbindung.cursor()
-        c.execute("""SELECT *
+
+class Person(object):  # 3
+    def __init__(self, form, db):
+        self.name = form.getvalue("name")
+        self.pw = form.getvalue("passwort")
+        self.db = db
+
+    def id_ok(self):  # 4
+        logging.debug("Name: {}, Passwort:{}".format(
+            self.name, self.pw))
+        try:
+            logging.debug(self.db)
+            verbindung = sqlite3.connect(self.db)
+            c = verbindung.cursor()
+            c.execute("""SELECT *
                      FROM person
                      WHERE name = ?;""", (self.name,))
-        logging.debug("Mit Datenbank verbunden.")
-        fingerprint_db = list(c)[0][1]               #5
-        pw_bytes = self.pw.encode("utf-8")           #6 
-        fingerprint_pw = hashlib.md5(pw_bytes).digest()
-        c.close()
-        verbindung.close()
-        return fingerprint_db == fingerprint_pw      #7
+            logging.debug("Mit Datenbank verbunden.")
+            fingerprint_db = list(c)[0][1]  # 5
+            pw_bytes = self.pw.encode("utf-8")  # 6
+            fingerprint_pw = hashlib.md5(pw_bytes).digest()
+            c.close()
+            verbindung.close()
+            return fingerprint_db == fingerprint_pw  # 7
 
-    except:
-        return False
+        except:
+            return False
 
-  def aktualisiere_pw(self, form):                   #8
-    neupw1 = form.getvalue("neupass1", "")
-    neupw2 = form.getvalue("neupass2", "")
-    if neupw1 == neupw2: 
-        self.pw = neupw1
-        verbindung = sqlite3.connect(self.db)
-        c = verbindung.cursor()
-        c.execute("""UPDATE person
+    def aktualisiere_pw(self, form):  # 8
+        neupw1 = form.getvalue("neupass1", "")
+        neupw2 = form.getvalue("neupass2", "")
+        if neupw1 == neupw2:
+            self.pw = neupw1
+            verbindung = sqlite3.connect(self.db)
+            c = verbindung.cursor()
+            c.execute("""UPDATE person
                      SET fingerprint = ?
                      WHERE name = ?;
                  """,
-                (hashlib.md5(self.pw.encode("utf-8")).digest(),
-                 self.name))
-        verbindung.commit()
-        c.close()
-        verbindung.close()
-        return "Passwort ge&auml;ndert."
-    else:
-        return "Fehler! Passw&ouml;rter nicht gleich!"
-    
-class Beitrag(object):                               #9
+                      (hashlib.md5(self.pw.encode("utf-8")).digest(),
+                       self.name))
+            verbindung.commit()
+            c.close()
+            verbindung.close()
+            return "Passwort ge&auml;ndert."
+        else:
+            return "Fehler! Passw&ouml;rter nicht gleich!"
+
+
+class Beitrag(object):  # 9
     def __init__(self, form, autor, db):
-      self.text = self.titel = ""
-      self.db = db
-      self.autor = autor
-      if "titel" in form.keys():
-        self.text = form.getvalue("text")
-        self.titel = form.getvalue("titel")
-        sekunden = float(form.getvalue("haltbar")) *24*3600
-        self.verfallsdatum = sekunden + time.time()
-        logging.debug("Verfallsdatum:" + str(self.verfallsdatum))
+        self.text = self.titel = ""
+        self.db = db
+        self.autor = autor
+        if "titel" in form.keys():
+            self.text = form.getvalue("text")
+            self.titel = form.getvalue("titel")
+            sekunden = float(form.getvalue("haltbar")) * 24 * 3600
+            self.verfallsdatum = sekunden + time.time()
+            logging.debug("Verfallsdatum:" + str(self.verfallsdatum))
 
     def publiziere(self):
-        if self.titel:                               #10
-          logging.debug("Titel: " + self.titel)
-          logging.debug("Text: " + self.text)
-          verbindung = sqlite3.connect(self.db)
-          c = verbindung.cursor()
-          c.execute("""SELECT *
+        if self.titel:  # 10
+            logging.debug("Titel: " + self.titel)
+            logging.debug("Text: " + self.text)
+            verbindung = sqlite3.connect(self.db)
+            c = verbindung.cursor()
+            c.execute("""SELECT *
                        FROM beitrag
                        WHERE titel = ?;""",
-                     (self.titel,))
-          if not list(c):                           #11
-            c.execute("""INSERT INTO beitrag
+                      (self.titel,))
+            if not list(c):  # 11
+                c.execute("""INSERT INTO beitrag
                          VALUES(?, ?, ?, ?);""",
-                      (self.titel, self.text,
-                       self.verfallsdatum,
-                       self.autor.name))
-            logging.debug("Gespeichert: " + self.titel)
-            verbindung.commit()
-            self.text = ""
-            self.titel = ""
-            meldung = "Beitrag wurde gespeichert."
-          else:
-            meldung = "Titel existiert bereits."
-          c.close()
-          verbindung.close()
-        else: meldung = ""
+                          (self.titel, self.text,
+                           self.verfallsdatum,
+                           self.autor.name))
+                logging.debug("Gespeichert: " + self.titel)
+                verbindung.commit()
+                self.text = ""
+                self.titel = ""
+                meldung = "Beitrag wurde gespeichert."
+            else:
+                meldung = "Titel existiert bereits."
+            c.close()
+            verbindung.close()
+        else:
+            meldung = ""
         return meldung
 
     def aktualisiere_news(self, news_pfad):
@@ -196,19 +206,19 @@ class Beitrag(object):                               #9
         verbindung = sqlite3.connect(self.db)
         c = verbindung.cursor()
         beitraege = list(
-          c.execute("""select * FROM beitrag;"""))  
-        pubtext ="" 
-        for (titel, text,  verfallsdatum, 
-             autor) in beitraege:                   #12
-          if float(verfallsdatum) > time.time():    
-            pubtext += BEITRAG.format(
-                         titel.translate(HTML), 
-                         autor.translate(HTML),
-                         text.translate(HTML))
-          else:                                     #13
-            c.execute("""DELETE FROM beitrag
+            c.execute("""SELECT * FROM beitrag;"""))
+        pubtext = ""
+        for (titel, text, verfallsdatum,
+             autor) in beitraege:  # 12
+            if float(verfallsdatum) > time.time():
+                pubtext += BEITRAG.format(
+                    titel.translate(HTML),
+                    autor.translate(HTML),
+                    text.translate(HTML))
+            else:  # 13
+                c.execute("""DELETE FROM beitrag
                          WHERE titel = ?;""", (titel,))
-        logging.debug("Veröffentlichter Text:"+pubtext)
+        logging.debug("Veröffentlichter Text:" + pubtext)
         verbindung.commit()
         c.close()
         verbindung.close()
@@ -217,39 +227,23 @@ class Beitrag(object):                               #9
         f.write(WEBSEITE.format(time.asctime(), pubtext))
         f.close()
 
+
 DB = "redaktion/redaktion.db"
 NEWS_PFAD = "html/news.html"
 form = cgi.FieldStorage()
-redakteur = Person(form, DB)                        #14
-beitrag = Beitrag(form, redakteur, DB)                         
-beitragfehler = ""                                  #15
+redakteur = Person(form, DB)  # 14
+beitrag = Beitrag(form, redakteur, DB)
+beitragfehler = ""  # 15
 pwfehler = ""
-if redakteur.id_ok():                               #16
-  beitragfehler = beitrag.publiziere()
-  beitrag.aktualisiere_news(NEWS_PFAD)
-  if "neuespass" in form.keys():
-    pwfehler = redakteur.aktualisiere_pw(form)
-  print(SEITE1.format(redakteur.name,
-                      redakteur.pw,
-                      beitrag.text,
-                      beitragfehler,
-                      pwfehler))
-else: print(SEITE2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
+if redakteur.id_ok():  # 16
+    beitragfehler = beitrag.publiziere()
+    beitrag.aktualisiere_news(NEWS_PFAD)
+    if "neuespass" in form.keys():
+        pwfehler = redakteur.aktualisiere_pw(form)
+    print(SEITE1.format(redakteur.name,
+                        redakteur.pw,
+                        beitrag.text,
+                        beitragfehler,
+                        pwfehler))
+else:
+    print(SEITE2)

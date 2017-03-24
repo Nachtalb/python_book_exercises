@@ -1,20 +1,24 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  notebook.py
 # Kalender, in den man Notizen eintragen kann
 #
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 
-import sys, pickle
-from PyQt5.QtWidgets import (QApplication, QCalendarWidget, QHBoxLayout, 
-        QMessageBox, QPushButton, QTextEdit, QVBoxLayout, QWidget)
-PATH = "notes.dat"                        
+import pickle
+import sys
 
-class NoteBook ():
+from PyQt5.QtWidgets import (QApplication, QCalendarWidget, QHBoxLayout,
+                             QMessageBox, QPushButton, QTextEdit, QVBoxLayout, QWidget)
+
+PATH = "notes.dat"
+
+
+class NoteBook():
     def __init__(self):
         try:
             f = open(PATH, "rb")
@@ -33,8 +37,10 @@ class NoteBook ():
 
     def getNote(self, d):
         if d in self.notes.keys():
-            return self.notes[d]  
-        else: return ""
+            return self.notes[d]
+        else:
+            return ""
+
 
 class CalendarNotes(QWidget):
     def __init__(self):
@@ -45,7 +51,7 @@ class CalendarNotes(QWidget):
         self.setWindowTitle("Tagebuch")
         self.cal = QCalendarWidget(self)
         self.cal.setGridVisible(True)
-        self.editor = QTextEdit(self) 
+        self.editor = QTextEdit(self)
         self.editor.setReadOnly(True)
         self.bEdit = QPushButton("&Edit", self)
         self.bCancel = QPushButton("&Abbrechen", self)
@@ -79,7 +85,7 @@ class CalendarNotes(QWidget):
         self.notes.addNote(self.editor.toPlainText(), d)
         QMessageBox.information(self, "Tagebuch",
                                 "Änderung gespeichert")
-        self.display() 
+        self.display()
 
     def editNote(self):
         self.bSave.show()
@@ -92,6 +98,7 @@ class CalendarNotes(QWidget):
         d = self.cal.selectedDate().toString()
         self.editor.setText(self.notes.getNote(d))
         self.editor.setReadOnly(True)
+
 
 app = QApplication(sys.argv)
 notes = CalendarNotes()

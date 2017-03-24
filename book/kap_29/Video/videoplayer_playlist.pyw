@@ -1,21 +1,23 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  videoplayer_playlist.pyw
 # Videoplayer mit Playlist
 #
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 29
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 
 
-from PyQt5.QtWidgets import *
+import sys
+
+from PyQt5.QtCore import *
 from PyQt5.QtMultimedia import (QMediaPlayer,
                                 QMediaContent, QMediaPlaylist)
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtCore import *
-import sys 
+from PyQt5.QtWidgets import *
+
 
 class Window(QWidget):
     def __init__(self):
@@ -27,7 +29,7 @@ class Window(QWidget):
     def createWidgets(self):
         self.setWindowTitle("Videoplayer")
         self.videoWidget = QVideoWidget(self)
-        self.videoWidget.setMinimumSize(320,180)
+        self.videoWidget.setMinimumSize(320, 180)
         self.playlist = QMediaPlaylist()
         self.player = QMediaPlayer(self)
         self.player.setVideoOutput(self.videoWidget)
@@ -40,8 +42,7 @@ class Window(QWidget):
         self.label = QLabel(self, text="Video -/-")
         self.label.setSizePolicy(QSizePolicy.Expanding,
                                  QSizePolicy.Fixed)
-        
-     
+
     def createLayout(self):
         vBox = QVBoxLayout()
         vBox.addWidget(self.videoWidget)
@@ -52,23 +53,21 @@ class Window(QWidget):
         vBox.addLayout(hBox)
         self.setLayout(vBox)
 
-    def play (self):
+    def play(self):
         self.playlist.next()
         self.player.play()
         self.label.setText(
             "Video %i/%i " % (self.playlist.currentIndex() + 1,
                               self.playlist.mediaCount()))
-            
+
     def getMovie(self):
         fileName, _ = QFileDialog.getOpenFileName(self,
-                                         "Neues Video auswählen")
+                                                  "Neues Video auswählen")
         self.media = QMediaContent(QUrl(fileName))
         self.playlist.addMedia(self.media)
         self.playButton.setEnabled(True)
 
-           
+
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-
-

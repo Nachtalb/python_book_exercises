@@ -1,6 +1,6 @@
 #! /Python34/pythonw.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  pizza_order.pyw
 # Eine Anwendung mit Schaltfächen und Checkboxen zum
 # Bestellen einer Pizza
@@ -8,34 +8,35 @@
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 28
 # Michael Weigend 22.09.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 # pizza_order.py
-import sys, random
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import (QApplication, QVBoxLayout, QLabel, 
-                             QTextEdit, QWidget, QRadioButton,
+import sys
+
+from PyQt5.QtWidgets import (QApplication, QVBoxLayout, QLabel,
+                             QWidget, QRadioButton,
                              QButtonGroup, QCheckBox)
 
 ORDER = "Die Pizza kostet %.2f €."
+
 
 class Order(QWidget):
     def __init__(self):
         super().__init__()
 
         # Widgets
-        self.label = QLabel()                                     #1                            
-        self.rbBig = QRadioButton("Groß")                         #2     
-        self.rbBig.setChecked(True)                               
+        self.label = QLabel()  # 1
+        self.rbBig = QRadioButton("Groß")  # 2
+        self.rbBig.setChecked(True)
         self.rbSmall = QRadioButton("Klein")
-        self.sizeButtons = QButtonGroup()                         #3  
-        self.sizeButtons.addButton(self.rbBig)           
+        self.sizeButtons = QButtonGroup()  # 3
+        self.sizeButtons.addButton(self.rbBig)
         self.sizeButtons.addButton(self.rbSmall)
-        self.cbTomatos = QCheckBox("Tomaten")                     #4
+        self.cbTomatos = QCheckBox("Tomaten")  # 4
         self.cbCheese = QCheckBox("Käse")
         self.cbSalami = QCheckBox("Salami")
-                                   
+
         # Layout
-        vBox = QVBoxLayout()                                      #5
+        vBox = QVBoxLayout()  # 5
         self.setLayout(vBox)
         vBox.addWidget(self.rbBig)
         vBox.addWidget(self.rbSmall)
@@ -46,8 +47,8 @@ class Order(QWidget):
 
         # Connections
         for element in (self.rbBig, self.rbSmall,
-                self.cbTomatos, self.cbCheese, self.cbSalami):
-            element.clicked.connect(self.calculate)               #6
+                        self.cbTomatos, self.cbCheese, self.cbSalami):
+            element.clicked.connect(self.calculate)  # 6
 
         self.setWindowTitle("Pizza-Bestellung")
         self.show()
@@ -55,18 +56,19 @@ class Order(QWidget):
 
     def calculate(self):
         size = self.sizeButtons.checkedButton().text()
-        if size == "Groß":                                        #7
+        if size == "Groß":  # 7
             price = 3.0
         else:
             price = 2.0
-        if self.cbTomatos.isChecked():                            #8
+        if self.cbTomatos.isChecked():  # 8
             price += 1
         if self.cbCheese.isChecked():
             price += 1.5
         if self.cbSalami.isChecked():
             price += 1.5
-            
+
         self.label.setText(ORDER % price)
+
 
 app = QApplication(sys.argv)
 order = Order()

@@ -1,6 +1,6 @@
 #!/Library/Frameworks/Python.framework/Versions/3.6/bin/python3                               #1
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  zaehler.py 
 # CGI-Skript, das eine html-Seite generiert. Es merkt sich
 # in einem Cookie, wie oft der Client diese Seite schon besucht hat.
@@ -8,10 +8,11 @@
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 22
 # Michael Weigend 22.08.2016
-#----------------------------------------------------
- 
-import  os
+# ----------------------------------------------------
+
+import os
 from http.cookies import SimpleCookie
+
 # Stringkonstanten
 antwort1 = """<h3> Willkommen!</h3>
 Sie besuchen diese Seite zum ersten Mal."""
@@ -25,37 +26,25 @@ httpPaket = """Content-Type: text/html
 <body>
 {}
 </body>
-</html>"""                                             #1
+</html>"""  # 1
+
 
 class Zaehler(object):
-  def __init__(self):
-    self.c = SimpleCookie()                            #2
-    try:
-      self.c.load(os.environ["HTTP_COOKIE"])           #3
-      self.c["zaehler"] = int(self.c["zaehler"].value)+1
-    except:
-      self.c["zaehler"] = 1                            #4
-    self.besuche=self.c["zaehler"].value
-    
-  def __str__(self):
-    if self.besuche == '1': antwort = antwort1         #5
-    else: antwort = antwort2.format(self.besuche)      #6
-    return httpPaket.format(self.c, antwort)           #7
+    def __init__(self):
+        self.c = SimpleCookie()  # 2
+        try:
+            self.c.load(os.environ["HTTP_COOKIE"])  # 3
+            self.c["zaehler"] = int(self.c["zaehler"].value) + 1
+        except:
+            self.c["zaehler"] = 1  # 4
+        self.besuche = self.c["zaehler"].value
+
+    def __str__(self):
+        if self.besuche == '1':
+            antwort = antwort1  # 5
+        else:
+            antwort = antwort2.format(self.besuche)  # 6
+        return httpPaket.format(self.c, antwort)  # 7
+
 
 print(Zaehler())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    

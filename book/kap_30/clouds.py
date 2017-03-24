@@ -1,6 +1,6 @@
 #! /Python34/python.exe
 
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname:  clouds.py
 # Bestimmung des Bewölkungsgrades durch Auswertung eines Fotos.
 # Es erscheinen nacheinander zwei Fenster.
@@ -12,14 +12,14 @@
 # Python 3, 6. Auflage, mitp 2016
 # Kap. 30.13
 # Michael Weigend 23.10.2016
-#----------------------------------------------------
+# ----------------------------------------------------
 
-import PIL 
-import numpy as np
+import PIL
 import matplotlib.pyplot as plt
+import numpy as np
 
 img = np.array(PIL.Image.open("Wolken.png"))
-#print(img)
+# print(img)
 img_blue = img[:, :, 2] / np.mean(img, axis=2)
 plt.imshow(img_blue, cmap=plt.cm.gray)
 plt.colorbar()
@@ -30,45 +30,3 @@ plt.imshow(img_bw, cmap=plt.cm.gray)
 plt.colorbar()
 plt.show()
 print(1 - np.mean(img_bw))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

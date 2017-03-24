@@ -1,11 +1,11 @@
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname: mahnung.py
 # Automatische Produktion von Mahnbriefen
 #
 # Objektorientierte Programmierung mit Python
 # Kap. 13
 # Michael Weigend 2.10.09
-#----------------------------------------------------
+# ----------------------------------------------------
 # mahnung.py
 class Mahnung:
     basistext = """{anrede} {name},
@@ -17,20 +17,22 @@ Bitte überweise sie umgehend auf das unten stehende Konto.
 
 Mit freundlichen Grüßen
 Tim (Kassenwart)
-"""                                                   #1
-    def __init__(self, geschlecht, name, von, bis ):
+"""  # 1
+
+    def __init__(self, geschlecht, name, von, bis):
         if geschlecht == 'm':
             anrede = 'Lieber'
         else:
             anrede = 'Liebe'
 
         self.text = self.basistext.format(anrede=anrede,
-                                         name=name,
-                                         von=von,
-                                         bis=bis)     #2
+                                          name=name,
+                                          von=von,
+                                          bis=bis)  # 2
 
     def __str__(self):
-         return self.text                             #3
+        return self.text  # 3
+
 
 # Hauptprogramm
 personen = [('m', 'Sven', 'Januar', 'Mai'),
@@ -39,6 +41,4 @@ personen = [('m', 'Sven', 'Januar', 'Mai'),
 for g, n, v, b in personen:
     print(Mahnung(g, n, v, b))
 
-
 input('Beenden mit <ENTER>')
-        

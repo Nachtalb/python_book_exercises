@@ -1,14 +1,16 @@
-#----------------------------------------------------
+# ----------------------------------------------------
 # Dateiname: buchstabenregler.pyw
 #
 # Objektorientierte Programmierung mit Python
 # Kap. 15  
 # Michael Weigend 8. 10. 09
-#----------------------------------------------------
- 
+# ----------------------------------------------------
+
 from tkinter import *
+
+
 class Buchstabenregler(object):
-    def __init__ (self):
+    def __init__(self):
         self.fenster = Tk()
         self.label = Label(self.fenster, text='A',
                            font=('Arial', 4))
@@ -20,14 +22,8 @@ class Buchstabenregler(object):
         self.fenster.mainloop()
 
     def setzeGroesse(self, event):
-        x=int(self.scale.get())
+        x = int(self.scale.get())
         self.label.config(font=('Arial', x))
 
+
 b = Buchstabenregler()
-
-
-
- 
-
-
-

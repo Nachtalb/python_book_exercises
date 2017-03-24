@@ -1,6 +1,3 @@
-from turtle import *
-
-
 def drawTree(length):
     if length < 5:
         return
