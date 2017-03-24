@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<airline>
+    <airport name="München">
+        <destination>Dortmund</destination>
+    </airport>
+    <airport name="Dortmund">
+        <destination>München</destination>
+        <destination>Hamburg</destination>
+        <destination>Berlin</destination>
+    </airport>
+    <airport name="Hamburg">
+        <destination>Berlin</destination>
+        <destination>Dortmund</destination>
+    </airport>
+    <airport name="Berlin">
+        <destination>Hamburg</destination>
+        <destination>Dortmund</destination>
+    </airport>
+</airline>
