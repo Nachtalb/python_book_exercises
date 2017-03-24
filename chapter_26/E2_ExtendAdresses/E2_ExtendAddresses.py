@@ -32,9 +32,36 @@ class Addresses(object):
                 p.removeChild(e)
                 e.unlink()
 
+    def getAllAddresses(self):
+        emails = self.doc.getElementsByTagName("email")
+        res = []
+        for email in emails:
+            res.append(email.firstChild.data)
+        return res
+
+    def getAddressesByName(self, name):
+        emails = self.doc.getElementsByTagName("email")
+        res = []
+        for email in emails:
+            if email.parentNode.getAttribute("name") == name:
+                res.append(email.firstChild.data)
+        return res
+
+    def insertPerson(self, name):
+        person = self.doc.createElement("person")
+        person.setAttribute("name", name)
+        self.doc.documentElement.appendChild(person)
+
+    def removePerson(self, name):
+        for person in self.doc.getElementsByTagName("person"):
+            if person.getAttribute("name") == name:
+                p = person.parentNode
+                p.removeChild(person)
+                person.unlink()
+
     def save(self, path):
         f = open(path, 'w')
-        f.write(self.doc.toxml())
+        f.write(self.doc.toprettyxml())
         f.close()
 
     def __str__(self):
@@ -44,7 +71,11 @@ class Addresses(object):
 if __name__ == "__main__":
     a = Addresses("gruppeattr.xml")
     a.deleteAddress("sabrina@maier.de")
-    a.insertAddress("Tom Kahlenbaum",
-                    "tom@media-objects.de")
+    a.insertAddress("Tom Kahlenbaum", "tom@media-objects.de")
+    print(a.getAllAddresses())
+    print(a.getAddressesByName("Tom Kahlenbaum"))
+    a.insertPerson("Deine Mudda")
+    a.insertAddress("Deine Mudda", "deine.mudda@gmail.com")
+    a.removePerson("Tom Kahlenbaum")
     a.save("gruppeattr_1.xml")
     print(a)
